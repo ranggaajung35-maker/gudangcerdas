@@ -1,0 +1,10 @@
+@extends('layouts.app')
+@section('title', 'Kategori')
+@section('breadcrumb', 'Kategori')
+@section('content')
+<div class="page-heading heading-with-action"><div><span class="eyebrow accent-eyebrow">MASTER DATA</span><h1>Kategori <span class="heading-dot">.</span></h1><p>Kelompokkan produk agar inventaris lebih mudah dikelola.</p></div><a href="{{ route('categories.create') }}" class="btn btn-primary">＋ Tambah kategori</a></div>
+<section class="panel table-panel"><div class="panel-toolbar"><form method="GET" class="search-form"><span>⌕</span><input type="search" name="q" value="{{ request('q') }}" placeholder="Cari nama kategori..."><button class="btn btn-light btn-small">Cari</button></form><span class="result-count">{{ $categories->total() }} kategori</span></div>
+<div class="table-wrap"><table><thead><tr><th>NAMA KATEGORI</th><th>DESKRIPSI</th><th>JUMLAH PRODUK</th><th>STATUS</th><th class="text-right">AKSI</th></tr></thead><tbody>
+@forelse($categories as $category)<tr><td><div class="table-product"><span class="table-product-icon category-icon">▤</span><strong>{{ $category->name }}</strong></div></td><td class="muted-cell">{{ \Illuminate\Support\Str::limit($category->description ?: 'Tidak ada deskripsi', 65) }}</td><td><span class="count-chip">{{ $category->products_count }} produk</span></td><td><span class="badge {{ $category->is_active ? 'badge-success' : 'badge-neutral' }}">{{ $category->is_active ? 'Aktif' : 'Nonaktif' }}</span></td><td><div class="action-group"><a class="action-link" href="{{ route('categories.edit', $category) }}">Edit</a>@if(auth()->user()->isAdmin())<form method="POST" action="{{ route('categories.destroy', $category) }}" data-confirm="Hapus kategori {{ $category->name }}?">@csrf @method('DELETE')<button class="action-link danger-link">Hapus</button></form>@endif</div></td></tr>@empty<tr><td colspan="5"><div class="empty-table">Belum ada kategori. <a href="{{ route('categories.create') }}">Tambahkan kategori</a>.</div></td></tr>@endforelse
+</tbody></table></div><div class="pagination-wrap">{{ $categories->links() }}</div></section>
+@endsection

@@ -1,0 +1,22 @@
+flowchart TD
+    A[Browser / User] --> B[Laravel Route: routes/web.php]
+    B --> C{Authentication Middleware}
+    C -->|Guest| D[Auth Controller]
+    C -->|Authenticated| E{Role Middleware}
+    E -->|Admin / Staff| F[Application Controller]
+    E -->|Insufficient role| X[403 Forbidden]
+    D --> G[Validation / Rate Limiter]
+    F --> G
+    G --> H[Model + Eloquent ORM]
+    H --> I[(MySQL Relational Database)]
+    I --> H
+    H --> J[Controller prepares data]
+    J --> K[Blade View]
+    K --> L[HTML + CSS + JavaScript]
+    L --> A
+
+    subgraph MVC[Model - View - Controller]
+      H
+      F
+      K
+    end

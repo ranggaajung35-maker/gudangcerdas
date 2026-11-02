@@ -1,0 +1,58 @@
+erDiagram
+    USERS ||--o{ STOCK_MOVEMENTS : records
+    CATEGORIES ||--o{ PRODUCTS : groups
+    SUPPLIERS o|--o{ PRODUCTS : supplies
+    PRODUCTS ||--o{ STOCK_MOVEMENTS : has_history
+
+    USERS {
+        bigint id PK
+        varchar name
+        varchar email UK
+        varchar password
+        enum role
+        varchar phone
+        timestamps timestamps
+    }
+    CATEGORIES {
+        bigint id PK
+        varchar name UK
+        text description
+        boolean is_active
+        timestamps timestamps
+    }
+    SUPPLIERS {
+        bigint id PK
+        varchar company_name
+        varchar contact_name
+        varchar email
+        varchar phone
+        text address
+        timestamps timestamps
+    }
+    PRODUCTS {
+        bigint id PK
+        varchar sku UK
+        varchar name
+        text description
+        bigint category_id FK
+        bigint supplier_id FK
+        decimal purchase_price
+        decimal selling_price
+        int stock
+        int min_stock
+        varchar unit
+        varchar location
+        boolean is_active
+        timestamps timestamps
+    }
+    STOCK_MOVEMENTS {
+        bigint id PK
+        bigint product_id FK
+        bigint user_id FK
+        enum type
+        int quantity
+        varchar reference
+        text notes
+        datetime movement_date
+        timestamps timestamps
+    }

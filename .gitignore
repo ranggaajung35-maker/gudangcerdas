@@ -1,0 +1,16 @@
+/vendor
+/node_modules
+/public/build
+/public/hot
+/.phpunit.cache
+/.env
+/.env.backup
+/.env.production
+.phpunit.result.cache
+/storage/*.key
+/storage/pail
+/auth.json
+npm-debug.log
+yarn-error.log
+.DS_Store
+Thumbs.db

@@ -1,0 +1,15 @@
+flowchart TD
+    A[Staff/Admin buka form transaksi] --> B[Pilih produk, jenis, jumlah, tanggal]
+    B --> C[Server-side validation]
+    C -->|Invalid| D[Kembali dengan error validasi]
+    C -->|Valid| E[Mulai DB transaction]
+    E --> F[Lock row produk: SELECT FOR UPDATE]
+    F --> G{Jenis transaksi?}
+    G -->|Masuk| H[Tambah saldo stok]
+    G -->|Keluar| I{Saldo cukup?}
+    I -->|Tidak| J[Batalkan transaksi + tampilkan error]
+    I -->|Ya| K[Kurangi saldo stok]
+    H --> L[Simpan stock_movement]
+    K --> L
+    L --> M[Commit DB transaction]
+    M --> N[Redirect + notifikasi sukses]
