@@ -1,1 +1,0 @@
-web: bash -c "mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache && touch storage/logs/laravel.log && chmod -R 777 storage bootstrap/cache && exec vendor/bin/heroku-php-apache2 public/"
